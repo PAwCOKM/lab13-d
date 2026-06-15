@@ -1,6 +1,5 @@
 # Lab13 + 13D. Docker Compose, Stack LEMP i phpMyAdmin
 
-**Autor:** `Kacper Madyński`
 
 # 1. Rozwiązanie wymagań z zadania
 
@@ -13,20 +12,20 @@ Przygotowano środowisko składające się z czterech kontenerów:
 - MySQL
 - phpMyAdmin
 
-Kontenery uruchamiane są za pomocą pliku `docker-compose.yaml`.
+Kontenery uruchamiane są za pomocą pliku docker-compose.yaml.
 
 ## Sieci
 
 Utworzono dwie sieci:
 
-- `frontend`
-- `backend`
+- frontend
+- backend
 
 ### Uzasadnienie podłączenia phpMyAdmin
 
-phpMyAdmin musi być dostępny dla użytkownika przez przeglądarkę, dlatego został podłączony do sieci `frontend`.
+phpMyAdmin musi być dostępny dla użytkownika przez przeglądarkę, dlatego został podłączony do sieci frontend.
 
-Jednocześnie musi komunikować się z serwerem MySQL, dlatego został również podłączony do sieci `backend`.
+Jednocześnie musi komunikować się z serwerem MySQL, dlatego został również podłączony do sieci backend.
 
 Dzięki temu możliwe jest logowanie do phpMyAdmin z poziomu przeglądarki oraz zarządzanie bazą danych znajdującą się w kontenerze MySQL.
 
@@ -50,7 +49,6 @@ cat <<EOF > ~/lab13/www/index.php
 <?php
 phpinfo();
 ?>
-EOF
 
 
 # 4. Konfiguracja Nginx
@@ -61,14 +59,11 @@ cat <<EOF > ~/lab13/nginx/default.conf
 server {
     listen 80;
     server_name localhost;
-
     root /var/www/html;
     index index.php index.html;
-
     location / {
         try_files \$uri \$uri/ /index.php?\$query_string;
     }
-
     location ~ \.php\$ {
         include fastcgi_params;
         fastcgi_pass php:9000;
@@ -76,7 +71,6 @@ server {
         fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
     }
 }
-EOF
 
 
 
@@ -254,17 +248,13 @@ services:
     image: mysql:8.4
     container_name: mysql
     restart: always
-
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
       MYSQL_DATABASE: testdb
-
     secrets:
       - db_root_password
-
     volumes:
       - mysql_data:/var/lib/mysql
-
     networks:
       - backend
 
@@ -272,16 +262,12 @@ services:
     image: phpmyadmin:5.2
     container_name: phpmyadmin
     restart: always
-
     ports:
       - "6001:80"
-
     environment:
       PMA_HOST: mysql
-
     depends_on:
       - mysql
-
     networks:
       - frontend
       - backend
