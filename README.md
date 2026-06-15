@@ -222,9 +222,6 @@ SELECT * FROM studenci;
 
 ![alt text](image-6.png)
 
-# Wnioski
-
-Utworzono środowisko LEMP składające się z czterech kontenerów: Nginx, PHP-FPM, MySQL oraz phpMyAdmin. Nginx poprawnie obsługuje plik `index.php` poprzez PHP-FPM i jest dostępny na porcie `4001`. phpMyAdmin działa na porcie `6001`, umożliwia logowanie do serwera MySQL oraz tworzenie nowych baz danych. 
 
 # 11. Użycie secrets (Lab 13D)
 
