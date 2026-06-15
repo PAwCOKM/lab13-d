@@ -332,9 +332,3 @@ SHOW DATABASES;
 SELECT * FROM studenci;
 
 ![alt text](image-9.png)
-
-# Wnioski
-
-Mogłem też ukryć nazwę bazy danych 
-MYSQL_DATABASE: testdb
-ale stwierdziłem, że w tym projekcie nie należy ona do dancyh wrażliwych.
